@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insure - Claim Insurance</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.2/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <header>
+    <!-- Navbar code here -->
+  </header>
+
+  <main>
+    <div class="container mt-5">
+      <h1>Claim Insurance</h1>
+      <form onsubmit="saveClaimData(event)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name of Policy Holder</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-3">
+          <label for="policyNumber" class="form-label">Policy Number</label>
+          <input type="text" class="form-control" id="policyNumber" placeholder="Enter your policy number" required>
+        </div>
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="dob" required>
+        </div>
+        <div class="mb-3">
+          <label for="claimReason" class="form-label">Claim Reason</label>
+          <textarea class="form-control" id="claimReason" rows="3" placeholder="Enter the reason for your claim" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="proofLink" class="form-label">Link to Uploaded Proof</label>
+          <input type="text" class="form-control" id="proofLink" placeholder="Enter the link to your uploaded proof" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/FileSaver.min.js"></script>
+  <script>
+    function saveClaimData(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Validate form fields
+      var name = document.getElementById("name").value;
+      var policyNumber = document.getElementById("policyNumber").value;
+      var dob = document.getElementById("dob").value;
+      var claimReason = document.getElementById("claimReason").value;
+      var proofLink = document.getElementById("proofLink").value;
+
+      // Validate required fields
+      if (!name || !policyNumber || !dob || !claimReason || !proofLink) {
+        alert("Please fill in all the required fields.");
+        return;
+      }
+
+      // Construct the claim data
+      var claimData = "Name: " + name + "\n" +
+        "Policy Number: " + policyNumber + "\n" +
+        "Date of Birth: " + dob + "\n" +
+        "Claim Reason: " + claimReason + "\n" +
+        "Proof Link: " + proofLink;
+
+      // Create a new Blob with the claim data
+      var blob = new Blob([claimData], { type: "text/plain;charset=utf-8" });
+
+      // Save the Blob as a file
+      saveAs(blob, policyNumber + ".txt");
+    }
+  </script>
+</body>
+
+</html>
